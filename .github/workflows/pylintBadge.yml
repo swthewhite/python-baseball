@@ -12,3 +12,4 @@ jobs:
         with:
           lint-path: src
           python-version: 3.11
+          requirements-path: requirements.txt
