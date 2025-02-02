@@ -1,7 +1,10 @@
 name: Run tests and upload coverage
 
 on: 
-  push
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   test:
@@ -15,12 +18,24 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
 
       - name: Install dependencies
-        run: pip install pytest pytest-cov
+        run: |
+          pip install --upgrade pip
+          pip install pytest pytest-cov
 
       - name: Run tests
-        run: pytest --cov-branch --cov-report=xml
+        run: |
+          # python_baseball 폴더(패키지)를 대상으로 커버리지 측정
+          pytest --cov=python_baseball --cov-branch --cov-report=xml
+
+      - name: List coverage files
+        run: ls -l
+
+      - name: Check coverage.xml
+        run: cat coverage.xml
 
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v5
