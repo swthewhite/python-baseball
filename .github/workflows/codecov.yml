@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: pip install pytest pytest-cov
       - name: Run tests
-        run: pytest --cov=python_baseball --cov-branch --cov-report=xml
+        run: pytest --cov-report=xml --cov-branch
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v5
         with:
